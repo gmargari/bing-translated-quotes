@@ -8,8 +8,8 @@ import os
 
 quoteTextFont = ImageFont.truetype("/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Oblique.ttf", 22)
 quoteAuthorFont = ImageFont.truetype("/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf", 22)
-quoteLeftMargin = 40       # space from left side, in pixels
-textWrapWidth = 53         # Max width of wrapped lines, in characters
+quoteLeftMargin = 25       # space from left side, in pixels
+textWrapWidth = 50         # Max width of wrapped lines, in characters
 quoteTextColor = "#eeeeee"
 quoteAuthorColor = "#eeeeee"
 bgImage = './bg.jpg'
@@ -62,7 +62,7 @@ def createQuoteImage(quoteText, quoteAuthor, bgImgFilename, outFilename):
     del draw
 
     # Save result image
-    img.save(outFilename)
+    img.save(outFilename, optimize = 1, quality = 90)
 
 #==============================================================================
 # main()
