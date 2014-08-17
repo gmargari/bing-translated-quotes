@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import json
 import requests # pip install requests
 import urllib
@@ -10,7 +11,7 @@ inLanguage = "en"
 outLanguage = "el"
 inFilename = "quotes.en.txt"
 outFilename = "quotes.el.txt"
-
+delimiter = ".NONEXISTINGWORD."
 #==============================================================================
 # translateText()
 #==============================================================================
@@ -43,6 +44,9 @@ def translateText(text):
     # Remove the trailing and leading quotes added by Bing
     text = text[1:-1]
 
+    # Symbol ";" is translated by Bing into "?", instead of the greek semi-colon
+    text = text.replace("?", "·")
+
     return text
 
 #==============================================================================
@@ -64,7 +68,7 @@ def main():
                 text = quote[0].strip()
                 author = quote[1].strip()
                 # Separate different quotes by '#'
-                text_buffer = text_buffer + text + ' @ '
+                text_buffer = text_buffer + text + ' ' + delimiter + ' '
 
                 # If buffer is long enough, translate it and add it to the
                 # buffer containg the translated text
@@ -83,7 +87,7 @@ def main():
         with open (outFilename, "w") as outFile:
 
             # Split lines by '#'
-            translated_text_lines = whole_translated_text.split('@')
+            translated_text_lines = whole_translated_text.split(delimiter)
 
             inFile.seek(0)
             i = 0
