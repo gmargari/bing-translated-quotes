@@ -63,8 +63,9 @@ def main():
             if (len(quote) > 1):
                 text = quote[0].strip()
                 author = quote[1].strip()
-                text_buffer = text_buffer + text + "\n"
-                
+                # Separate different quotes by '#'
+                text_buffer = text_buffer + text + '#'
+
                 # If buffer is long enough, translate it and add it to the
                 # buffer containg the translated text
                 if (len(text_buffer) > 8192):
@@ -81,19 +82,17 @@ def main():
         # write them in output file
         with open (outFilename, "w") as outFile:
 
-            # Split lines by the unicode character \u000a (Line feed)
-            translated_text_lines = whole_translated_text.split('\u000a')
-            print "lines = ", len(translated_text_lines)
+            # Split lines by '#'
+            translated_text_lines = whole_translated_text.split('#')
 
             inFile.seek(0)
             i = 0
             for line in inFile:
-                print i,
                 quote = line.split("#")
                 if (len(quote) > 1):
                     text = quote[0].strip()
                     author = quote[1].strip()
-                    translated_text = translated_text_lines[i]
+                    translated_text = translated_text_lines[i].strip()
                     outFile.write("{:s}#{:s}\n".format(translated_text, author))
                     i = i + 1
 
