@@ -21,7 +21,7 @@ outImageExtension = ".jpg"
 # lineHeight()
 #==============================================================================
 def lineHeight(textFont, text):
-    (width, height) = textFont.getsize(text)
+    (width, height) = textFont.getsize("αβγδεξζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ")
     return height * 1.1
 
 #==============================================================================
