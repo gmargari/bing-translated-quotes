@@ -6,10 +6,10 @@ import ImageDraw
 import textwrap
 import os
 
-quoteTextFont = ImageFont.truetype("/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Oblique.ttf", 24)
-quoteAuthorFont = ImageFont.truetype("/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf", 24)
+quoteTextFont = ImageFont.truetype("/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Oblique.ttf", 22)
+quoteAuthorFont = ImageFont.truetype("/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf", 22)
 quoteLeftMargin = 40       # space from left side, in pixels
-textWrapWidth = 42         # Max width of wrapped lines, in characters
+textWrapWidth = 53         # Max width of wrapped lines, in characters
 quoteTextColor = "#eeeeee"
 quoteAuthorColor = "#eeeeee"
 bgImage = './bg.jpg'
@@ -20,8 +20,8 @@ outImageExtension = ".jpg"
 #==============================================================================
 # lineHeight()
 #==============================================================================
-def lineHeight(textFont, text):
-    (width, height) = textFont.getsize("αβγδεξζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ")
+def lineHeight(font):
+    (width, height) = font.getsize("αβγδεξζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ")
     return height * 1.1
 
 #==============================================================================
@@ -29,10 +29,10 @@ def lineHeight(textFont, text):
 #==============================================================================
 def topMargin(text, font, draw, img):
     (imgW, imgH) = img.size
-    max_lines = imgH / lineHeight(font, text)
+    max_lines = imgH / lineHeight(font)
     # +2: one line for author and one empty line between text and author
     text_lines = len(textwrap.wrap(text, width = textWrapWidth)) + 2
-    return ((max_lines - text_lines) / 2) * lineHeight(font, text)
+    return ((max_lines - text_lines) / 2) * lineHeight(font)
 
 #==============================================================================
 # addText()
@@ -46,7 +46,7 @@ def addText(draw, x, y, text, textFont, textColor):
 def createQuoteImage(quoteText, quoteAuthor, bgImgFilename, outFilename):
 
     # Open background image
-    img = Image.open(bgImgFilename)            
+    img = Image.open(bgImgFilename)
     draw = ImageDraw.Draw(img)
 
     # Add text to image
@@ -56,8 +56,8 @@ def createQuoteImage(quoteText, quoteAuthor, bgImgFilename, outFilename):
     offset = topMargin(quoteText, quoteTextFont, draw, img)
     for line in textwrap.wrap(quoteText, width = textWrapWidth):
         addText(draw, margin, offset, line, quoteTextFont, quoteTextColor)
-        offset += lineHeight(quoteTextFont, line)
-    offset += lineHeight(quoteTextFont, quoteAuthor) # one empty line before author
+        offset += lineHeight(quoteTextFont)
+    offset += lineHeight(quoteTextFont) # one empty line before author
     addText(draw, margin, offset, quoteAuthor, quoteAuthorFont, quoteAuthorColor)
     del draw
 
