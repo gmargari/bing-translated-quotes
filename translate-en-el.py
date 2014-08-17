@@ -64,7 +64,7 @@ def main():
                 text = quote[0].strip()
                 author = quote[1].strip()
                 # Separate different quotes by '#'
-                text_buffer = text_buffer + text + '#'
+                text_buffer = text_buffer + text + ' @ '
 
                 # If buffer is long enough, translate it and add it to the
                 # buffer containg the translated text
@@ -83,7 +83,7 @@ def main():
         with open (outFilename, "w") as outFile:
 
             # Split lines by '#'
-            translated_text_lines = whole_translated_text.split('#')
+            translated_text_lines = whole_translated_text.split('@')
 
             inFile.seek(0)
             i = 0
