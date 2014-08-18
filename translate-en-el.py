@@ -3,6 +3,7 @@
 import json
 import requests # pip install requests
 import urllib
+import re
 
 # For getting your ClientID and ClientSecret, see: http://blogs.msdn.com/b/translation/p/gettingstarted1.aspx
 clientID = 'tmpCliendId909090' # your client id here
@@ -12,11 +13,25 @@ outLanguage = "el"
 inFilename = "quotes.en.txt"
 outFilename = "quotes.el.txt"
 delimiter = ".NONEXISTINGWORD."
+
 #==============================================================================
 # translateText()
 #==============================================================================
 def translateText(text):
     print "Translating buffer..."
+
+    # Helping Bing translation a bit...
+    text = text.replace("'cause", "because")
+    text = text.replace("'em", "them")
+    text = text.replace("'tis", "it is")
+    text = text.replace("'Tis", "It is")
+    # Add space after "..."
+    # (Explanation: match "..." followed by any letter. The ( ) used will store
+    # in variable \1 anything that matches the pattern within the parentheses.
+    # Then, replace this matched pattern with "..." followed by a
+    # space followed by the contents of variable \1.
+    text = re.sub(r'\.\.\.([a-zA-Z])', '... \\1', text)
+    text = re.sub(r'([a-zA-Z])\.\.\.', '\\1 ...', text)
 
     # Source: http://stackoverflow.com/a/12149985
     args = {
@@ -33,25 +48,32 @@ def translateText(text):
         'from': inLanguage,
         'to': outLanguage
     }
+
     translation_args['text'] = text
     result = requests.get(translation_url + urllib.urlencode(translation_args),
                           headers = headers)
-    text = result.content
+    trans_text = result.content
 
     # Remove the first 4 bytes, <feff>, defining the Byte Order Marker
-    text = text[3:]
+    trans_text = trans_text[3:]
 
     # Remove the trailing and leading quotes added by Bing
-    text = text[1:-1]
+    trans_text = trans_text[1:-1]
 
     # Symbol ";" is translated by Bing into "?", instead of the greek semi-colon
-    text = text.replace("?", "·")
+    trans_text = trans_text.replace("?", "·")
 
-    # Replace word "ό, τι" with "ό,τι"
-    text = text.replace(" ό, τι ", " ό,τι ")
-    text = text.replace("Ό, τι ", "Ό,τι ")
+    # Replace remove unnecessary space from word "ό, τι"
+    trans_text = trans_text.replace(" ό, τι ", " ό,τι ")
+    trans_text = trans_text.replace("Ό, τι ", "Ό,τι ")
 
-    return text
+    # Replace more than one space with a single space
+    text = re.sub(r' +', ' ', text)
+
+    # Bing often inserts a "\/" instead of "/"
+    trans_text = trans_text.replace("\\/", "/")
+
+    return trans_text
 
 #==============================================================================
 # main()
@@ -71,7 +93,7 @@ def main():
             if (len(quote) > 1):
                 text = quote[0].strip()
                 author = quote[1].strip()
-                # Separate different quotes by '#'
+                # Separate different quotes by delimiter
                 text_buffer = text_buffer + text + ' ' + delimiter + ' '
 
                 # If buffer is long enough, translate it and add it to the
