@@ -27,12 +27,13 @@ def lineHeight(font):
 #==============================================================================
 # topMargin()
 #==============================================================================
-def topMargin(text, font, draw, img):
+def topMargin(text, text_font, author, author_font, draw, img):
     (imgW, imgH) = img.size
-    max_lines = imgH / lineHeight(font)
-    # +2: one line for author and one empty line between text and author
-    text_lines = len(textwrap.wrap(text, width = textWrapWidth)) + 2
-    return ((max_lines - text_lines) / 2) * lineHeight(font)
+    text_lines = len(textwrap.wrap(text, width = textWrapWidth))
+    # +1 for empty line between text and author
+    author_lines = len(textwrap.wrap(author, width = textWrapWidth)) + 1
+    total_text_height = text_lines * lineHeight(text_font) + author_lines * lineHeight(author_font)
+    return (imgH - total_text_height)/2
 
 #==============================================================================
 # addText()
@@ -53,12 +54,14 @@ def createQuoteImage(quoteText, quoteAuthor, bgImgFilename, outFilename):
     quoteText = unicode(quoteText, 'utf-8')
     quoteAuthor = unicode(quoteAuthor, 'utf-8')
     margin = quoteLeftMargin
-    offset = topMargin(quoteText, quoteTextFont, draw, img)
+    offset = topMargin(quoteText, quoteTextFont, quoteAuthor, quoteAuthorFont, draw, img)
     for line in textwrap.wrap(quoteText, width = textWrapWidth):
         addText(draw, margin, offset, line, quoteTextFont, quoteTextColor)
         offset += lineHeight(quoteTextFont)
     offset += lineHeight(quoteTextFont) # one empty line before author
-    addText(draw, margin, offset, quoteAuthor, quoteAuthorFont, quoteAuthorColor)
+    for line in textwrap.wrap(quoteAuthor, width = textWrapWidth):
+        addText(draw, margin, offset, line, quoteAuthorFont, quoteAuthorColor)
+        offset += lineHeight(quoteAuthorFont)
     del draw
 
     # Save result image
