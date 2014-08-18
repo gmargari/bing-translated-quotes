@@ -77,9 +77,9 @@ def main():
             os.makedirs(outFolder)
 
         line = myfile.read().split("\n")
-        for i in range(1, len(line)):   # last line is empty
+        for i in range(0, len(line)):   # last line is empty
             # Each line is a pair of: <quote text> # <author name>
-            quote = line[i-1].split("#")
+            quote = line[i].split("#")
             if (len(quote) > 1):
                 text = quote[0].strip()
                 author = quote[1].strip()

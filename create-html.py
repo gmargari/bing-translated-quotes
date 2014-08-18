@@ -51,7 +51,7 @@ with open (outFilename, "w") as outFile:
         outFile.write(header.format(image_prefix + "/images/quote-1.jpg", file_lines[0].split("#")[0]))
         for i in range(0, num_quotes):
             quote = file_lines[i].split("#")[0]
-            imgurl = image_prefix + "/images/quote-" + str(i+1) + ".jpg"
+            imgurl = image_prefix + "/images/quote-" + str(i) + ".jpg"
             slide_code = "            <li><a href=\"" + imgurl + "\" title=\"" + quote + "\" data-link-to=\""  + imgurl + "\"></a></li>\n"
             outFile.write(slide_code)
         outFile.write(footer)
