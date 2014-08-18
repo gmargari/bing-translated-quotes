@@ -75,17 +75,17 @@ def main():
         # Create output folder, if it does not exist
         if not os.path.exists(outFolder):
             os.makedirs(outFolder)
-        num = 1
-        for line in myfile:
+
+        line = myfile.read().split("\n")
+        for i in range(1, len(line)):   # last line is empty
             # Each line is a pair of: <quote text> # <author name>
-            quote = line.split("#")
+            quote = line[i-1].split("#")
             if (len(quote) > 1):
                 text = quote[0].strip()
                 author = quote[1].strip()
-                outputFile = outFolder + "/" + outImagePrefix + str(num) + outImageExtension
+                outputFile = outFolder + "/" + outImagePrefix + str(i) + outImageExtension
                 print "Creating image " + outputFile + " ..."
                 createQuoteImage(text, author, bgImage, outputFile)
-                num = num + 1
 
 if __name__ == "__main__":
     main()
