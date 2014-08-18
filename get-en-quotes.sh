@@ -31,6 +31,12 @@ function get_quotes_2() {
         }'
 }
 
-get_quotes_1 >  quotes.en.txt
-get_quotes_2 >> quotes.en.txt
+outfile="quotes.en.txt"
+get_quotes_1 >  $outfile
+get_quotes_2 >> $outfile
+
+tmp=`mktemp`
+# https://github.com/gmargari/scripts/blob/master/unique-lines.py
+cat $outfile | unique-lines.py > $tmp
+mv $tmp $outfile
 
