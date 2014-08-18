@@ -3,7 +3,7 @@
 import sys
 
 quotesFilename = "quotes.en.txt"
-outFilename = "quotes.html"
+outFilename = "index.html"
 if (len(sys.argv) == 2 and sys.argv[1] == "--remote"):
     image_prefix = "https://raw.githubusercontent.com/gmargari/bing-translated-quotes/master/"
 else:
