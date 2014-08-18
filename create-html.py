@@ -13,7 +13,7 @@ header = """<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Really Simple Slideshow jQuery Plugin - HTML Captions Demo</title>
+    <title>Famous quotes translated in Greek by Bing</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
