@@ -47,6 +47,10 @@ def translateText(text):
     # Symbol ";" is translated by Bing into "?", instead of the greek semi-colon
     text = text.replace("?", "·")
 
+    # Replace word "ό, τι" with "ό,τι"
+    text = text.replace(" ό, τι ", " ό,τι ")
+    text = text.replace("Ό, τι ", "Ό,τι ")
+
     return text
 
 #==============================================================================
