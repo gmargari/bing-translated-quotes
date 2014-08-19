@@ -17,12 +17,6 @@ header = """<!doctype html>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <p align=center>
-        Famous quotes translated in Greek by Bing. More information: 
-        <a href="https://github.com/gmargari/bing-translated-quotes">
-            https://github.com/gmargari/bing-translated-quotes
-        </a>
-    </p>      
     <div class="main">
       <div class="rss-container">
         <div id="slideshow" class="rs-slideshow">
@@ -37,6 +31,10 @@ footer = """
         </div>
       </div>
     </div>
+    <p style="text-align: center; margin: 10px">
+        Famous quotes translated in Greek by Bing.
+        <a href="https://github.com/gmargari/bing-translated-quotes/"><img style="vertical-align:middle" src="images/but.gif"></a>
+    </p>
     <script src="js/jquery-1.7.1.min.js"></script>
     <script src="js/jquery.rs.slideshow.min.js"></script>
     <script src="js/dynamic-controls-bootstrap.js"></script>
