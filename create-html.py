@@ -48,7 +48,7 @@ with open (outFilename, "w") as outFile:
     with open (quotesFilename, "r") as enQuotes:
         file_lines = enQuotes.read().split("\n")
         num_quotes = len(file_lines) - 1 # -1: there is an empty line at the end
-        outFile.write(header.format(image_prefix + "/images/quote-1.jpg", file_lines[0].split("#")[0]))
+        outFile.write(header.format(image_prefix + "/images/quote-0.jpg", file_lines[0].split("#")[0]))
         for i in range(0, num_quotes):
             quote = file_lines[i].split("#")[0]
             imgurl = image_prefix + "/images/quote-" + str(i) + ".jpg"
